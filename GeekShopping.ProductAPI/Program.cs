@@ -1,4 +1,12 @@
+using GeekShopping.ProductAPI.Model.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connection = builder.Configuration["MySqlConnection:MysqlConnectionString"];
+
+builder.Services.AddDbContext<MySqlContext>
+    (options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 25))));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
