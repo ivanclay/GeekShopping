@@ -1,4 +1,5 @@
 ﻿using GeekShopping.ProductAPI.Data.ValueObjects;
+using GeekShopping.ProductAPI.Model;
 using GeekShopping.ProductAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,5 +29,29 @@ public class ProductController : Controller
         var products = await _productRepository.FindAll();
         if (products == null) return NotFound();
         return Ok(products);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ProductVO>> Create(ProductVO vo) 
+    {
+        if (vo == null) return BadRequest();
+        var productVo = await _productRepository.Create(vo);
+        return Ok(productVo);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<ProductVO>> Update(ProductVO vo)
+    {
+        if (vo == null) return BadRequest();
+        var productVo = await _productRepository.Update(vo);
+        return Ok(productVo);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<bool>> Delete(long id)
+    {
+        var status = await _productRepository.Delete(id);
+        if (!status) return BadRequest();
+        return Ok(status);
     }
 }
