@@ -22,17 +22,6 @@ public class ProductRepository : IProductRepository
         List<Product> products = await _context.Products.ToListAsync();
         return _mapper.Map<IEnumerable<ProductVO>>(products);
     }
-    public Task<ProductVO> Create(ProductVO vo)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> Delete(long id)
-    {
-        throw new NotImplementedException();
-    }
-
-
 
     public async Task<ProductVO> FindById(long id)
     {
@@ -40,8 +29,37 @@ public class ProductRepository : IProductRepository
         return _mapper.Map<ProductVO>(product);
     }
 
-    public Task<ProductVO> Update(ProductVO vo)
+    public async Task<ProductVO> Create(ProductVO vo)
     {
-        throw new NotImplementedException();
+        Product product = _mapper.Map<Product>(vo);
+        _context.Products.Add(product);
+        await _context.SaveChangesAsync();
+        return _mapper.Map<ProductVO>(product);
     }
+
+    public async Task<ProductVO> Update(ProductVO vo)
+    {
+        Product product = _mapper.Map<Product>(vo);
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync();
+        return _mapper.Map<ProductVO>(product);
+    }
+
+    public async Task<bool> Delete(long id)
+    {
+        try
+        {
+            var product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
+            if (product == null) return false;   
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch
+        {
+
+            return false;
+        }
+    }
+
 }
