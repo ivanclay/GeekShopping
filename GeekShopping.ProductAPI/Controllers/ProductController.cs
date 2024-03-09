@@ -32,7 +32,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProductVO>> Create(ProductVO vo) 
+    public async Task<ActionResult<ProductVO>> Create([FromBody] ProductVO vo) 
     {
         if (vo == null) return BadRequest();
         var productVo = await _productRepository.Create(vo);
@@ -40,7 +40,7 @@ public class ProductController : Controller
     }
 
     [HttpPut]
-    public async Task<ActionResult<ProductVO>> Update(ProductVO vo)
+    public async Task<ActionResult<ProductVO>> Update([FromBody] ProductVO vo)
     {
         if (vo == null) return BadRequest();
         var productVo = await _productRepository.Update(vo);
