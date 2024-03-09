@@ -20,6 +20,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Price</th>
+                <th>image</th>
                 <th></th>
             </tr>
         </thead>
@@ -30,6 +31,9 @@
                     <td>@item.Name</td>
                     <td>@item.CategoryName</td>
                     <td>@((item.Price).ToString("c"))</td>
+                    <td>
+                        <img src="@item.ImageUrl" width="40px" />
+                    </td>
                     <td>
                         <a 
                             asp-action="ProductEdit" 
