@@ -20,7 +20,7 @@ public class ProductService : IProductService
         return await response.ReadContentAsync<List<ProductModel>>();
     }
 
-    public async Task<ProductModel> FindById(long id)
+    public async Task<ProductModel> FindProductById(long id)
     {
         var response = await _client.GetAsync($"{BASE_PATH}/{id}");
         return await response.ReadContentAsync<ProductModel>();
